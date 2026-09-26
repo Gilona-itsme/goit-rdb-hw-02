@@ -18,10 +18,10 @@ USE `mydb` ;
 -- Table `mydb`.`сustomers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`сustomers` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `id_customer` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name_customer` VARCHAR(45) NOT NULL,
   `address` VARCHAR(255) NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id_customer`))
 ENGINE = InnoDB;
 
 
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 -- Table `mydb`.`products`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`products` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_product` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title_product` VARCHAR(150) NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id_product`),
   UNIQUE INDEX `title_product_UNIQUE` (`title_product` ASC) VISIBLE)
 ENGINE = InnoDB;
 
@@ -40,14 +40,16 @@ ENGINE = InnoDB;
 -- Table `mydb`.`orders`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`orders` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `id_order` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `date_order` DATE NOT NULL,
   `id_customer` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
+  `number_order` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_order`),
+  UNIQUE INDEX `number_order_UNIQUE` (`number_order` ASC) VISIBLE,
   INDEX `order_customer_idx` (`id_customer` ASC) VISIBLE,
   CONSTRAINT `order_customer`
     FOREIGN KEY (`id_customer`)
-    REFERENCES `mydb`.`сustomers` (`id`)
+    REFERENCES `mydb`.`сustomers` (`id_customer`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -64,12 +66,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`order_details` (
   INDEX `orderDetail_order_idx` (`id_order` ASC) VISIBLE,
   CONSTRAINT `orderDetail_product`
     FOREIGN KEY (`id_product`)
-    REFERENCES `mydb`.`products` (`id`)
+    REFERENCES `mydb`.`products` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `orderDetail_order`
     FOREIGN KEY (`id_order`)
-    REFERENCES `mydb`.`orders` (`id`)
+    REFERENCES `mydb`.`orders` (`id_order`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
