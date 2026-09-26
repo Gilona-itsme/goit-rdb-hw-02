@@ -87,18 +87,15 @@
 
 *Schema only, no data — columns and relationships in [`p5_DB_tables.sql`](./p5_DB_tables.sql).*
 
-- **customers**(id PK, name, address)
-- **products**(id PK, title_product UNIQUE)
-- **orders**(id PK, date, id_customer FK → customers.id)
-- **order_details**(id_product FK → products.id, quantity, id_order FK → orders.id)
+- **customers**(id_customer PK, name_customer, address)
+- **products**(id_product PK, title_product UNIQUE)
+- **orders**(id_order PK, date_order, number_order UNIQUE, id_customer FK → customers.id_customer)
+- **order_details**(id_order FK → orders.id_order, id_product FK → products.id_product, quantity) — складений PK / composite PK `(id_order, id_product)`
 
 ```
 customers ──< orders ──< order_details >── products
 ```
 
-> Примітка: у назві таблиці `сustomers` у SQL-файлі перша літера кирилична (`с`), а не латинська — варто виправити перед фінальним запуском на іншому середовищі, щоб уникнути плутанини з кодуванням назв.
->
-> *Note: the table name `сustomers` in the SQL file starts with a Cyrillic `с`, not a Latin one — worth fixing before running on another environment to avoid identifier-encoding confusion.*
 
 ## Запуск / Setup
 
